@@ -225,6 +225,8 @@ const DesktopApp: React.FC<DesktopProps> = (props) => {
                     src={satoshiThemeLogo}
                     alt="Satoshi Emblem"
                     style={{
+                        maxWidth: '85vw',
+                        maxHeight: '85vh',
                         width: 660,
                         height: 660,
                         objectFit: 'contain',
@@ -254,10 +256,12 @@ const DesktopApp: React.FC<DesktopProps> = (props) => {
             })}
             <div style={styles.shortcuts}>
                 {shortcuts.map((shortcut, i) => {
+                    const isSmallScreen = typeof window !== 'undefined' && window.innerHeight < 700;
+                    const stepY = isSmallScreen ? 78 : 104;
                     return (
                         <div
                             style={Object.assign({}, styles.shortcutContainer, {
-                                top: i * 104,
+                                top: i * stepY,
                             })}
                             key={shortcut.shortcutName}
                         >

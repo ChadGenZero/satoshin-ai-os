@@ -132,6 +132,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
                             startWindowOpen && styles.activeTabOuter
                         )}
                         onMouseDown={toggleStartWindow}
+                        onTouchStart={toggleStartWindow}
                     >
                         <div
                             style={Object.assign(
@@ -161,6 +162,10 @@ const Toolbar: React.FC<ToolbarProps> = ({
                                             styles.activeTabOuter
                                     )}
                                     onMouseDown={() => {
+                                        soundEffects.playSingleMouseClick();
+                                        toggleMinimize(key);
+                                    }}
+                                    onTouchStart={() => {
                                         soundEffects.playSingleMouseClick();
                                         toggleMinimize(key);
                                     }}
@@ -311,14 +316,16 @@ const styles: StyleSheetCSS = {
     },
     tabContainerOuter: {
         display: 'flex',
-        flex: 1,
-        maxWidth: 300,
+        flex: '0 1 150px',
+        maxWidth: 200,
+        minWidth: 44,
         marginRight: 4,
         boxSizing: 'border-box',
         cursor: 'pointer',
         border: `1px solid ${Colors.white}`,
         borderBottomColor: Colors.black,
         borderRightColor: Colors.black,
+        overflow: 'hidden',
     },
     tabContainer: {
         display: 'flex',
@@ -328,13 +335,15 @@ const styles: StyleSheetCSS = {
         alignItems: 'center',
         paddingLeft: 4,
         flex: 1,
+        overflow: 'hidden',
     },
     tabIcon: {
         marginRight: 6,
+        flexShrink: 0,
     },
     startContainer: {
         alignItems: 'center',
-        flexShrink: 1,
+        flexShrink: 0,
         // background: 'red',
         border: `1px solid ${Colors.lightGray}`,
         borderBottomColor: Colors.darkGray,
@@ -350,12 +359,14 @@ const styles: StyleSheetCSS = {
         border: `1px solid ${Colors.white}`,
         borderBottomColor: Colors.black,
         borderRightColor: Colors.black,
+        flexShrink: 0,
     },
     toolbarTabsContainer: {
-        // background: 'blue',
+        display: 'flex',
         flex: 1,
         marginLeft: 4,
         marginRight: 4,
+        overflowX: 'auto',
     },
     startIcon: {
         marginRight: 4,

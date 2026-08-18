@@ -559,8 +559,8 @@ const styles: StyleSheetCSS = {
     },
     grid2Col: {
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: 16,
+        gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+        gap: 12,
         height: '100%',
     },
     cardPanel: {

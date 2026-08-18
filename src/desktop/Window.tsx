@@ -53,41 +53,73 @@ const Window: React.FC<WindowProps> = (props) => {
 
     const resizeRef = useRef<any>(null);
 
-    const [top, setTop] = useState(props.top);
-    const [left, setLeft] = useState(props.left);
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+
+    const getInitialWidth = () => (isMobile ? Math.min(props.width, window.innerWidth - 8) : props.width);
+    const getInitialHeight = () => (isMobile ? Math.min(props.height, window.innerHeight - 36) : props.height);
+    const getInitialLeft = () => (isMobile ? 4 : props.left);
+    const getInitialTop = () => (isMobile ? 4 : props.top);
+
+    const [top, setTop] = useState<number>(getInitialTop());
+    const [left, setLeft] = useState<number>(getInitialLeft());
 
     const lastClickInside = useRef(false);
 
-    const [width, setWidth] = useState(props.width);
-    const [height, setHeight] = useState(props.height);
+    const [width, setWidth] = useState<any>(getInitialWidth());
+    const [height, setHeight] = useState<any>(getInitialHeight());
 
-    const [contentWidth, setContentWidth] = useState(props.width);
-    const [contentHeight, setContentHeight] = useState(props.height);
+    const [contentWidth, setContentWidth] = useState(getInitialWidth());
+    const [contentHeight, setContentHeight] = useState(getInitialHeight());
 
     const [windowActive, setWindowActive] = useState(true);
 
-    const [isMaximized, setIsMaximized] = useState(false);
+    const [isMaximized, setIsMaximized] = useState(isMobile);
     const [preMaxSize, setPreMaxSize] = useState({
-        width,
-        height,
-        top,
-        left,
+        width: props.width,
+        height: props.height,
+        top: props.top,
+        left: props.left,
     });
 
     const [isDragging, setIsDragging] = useState(false);
     const [isResizing, setIsResizing] = useState(false);
+
+    useEffect(() => {
+        const handleResizeWindow = () => {
+            if (window.innerWidth <= 768) {
+                setWidth((prev: any) => (typeof prev === 'number' ? Math.min(prev, window.innerWidth - 8) : prev));
+                setHeight((prev: any) => (typeof prev === 'number' ? Math.min(prev, window.innerHeight - 36) : prev));
+                setLeft(4);
+                setTop(4);
+            }
+        };
+        window.addEventListener('resize', handleResizeWindow);
+        return () => window.removeEventListener('resize', handleResizeWindow);
+    }, []);
+
+    const getClientCoords = (e: any) => {
+        if (e.touches && e.touches.length > 0) {
+            return { clientX: e.touches[0].clientX, clientY: e.touches[0].clientY };
+        }
+        return { clientX: e.clientX, clientY: e.clientY };
+    };
 
     const startResize = (event: any) => {
         event.preventDefault();
         setIsResizing(true);
         window.addEventListener('mousemove', onResize, false);
         window.addEventListener('mouseup', stopResize, false);
+        window.addEventListener('touchmove', onResize, false);
+        window.addEventListener('touchend', stopResize, false);
     };
 
-    const onResize = ({ clientX, clientY }: any) => {
+    const onResize = (e: any) => {
         if (isMaximized) return;
-        const curWidth = Math.min(1216, Math.max(300, clientX - left));
-        const curHeight = Math.min(928, Math.max(200, clientY - top));
+        const { clientX, clientY } = getClientCoords(e);
+        const maxW = window.innerWidth;
+        const maxH = window.innerHeight - 32;
+        const curWidth = Math.min(maxW - left - 4, Math.max(200, clientX - left));
+        const curHeight = Math.min(maxH - top - 4, Math.max(150, clientY - top));
         if (resizeRef.current) {
             resizeRef.current.style.width = `${curWidth}px`;
             resizeRef.current.style.height = `${curHeight}px`;
@@ -97,37 +129,44 @@ const Window: React.FC<WindowProps> = (props) => {
 
     const stopResize = () => {
         setIsResizing(false);
-        setWidth(resizeRef.current.style.width);
-        setHeight(resizeRef.current.style.height);
-        resizeRef.current.style.opacity = 0;
+        if (resizeRef.current && resizeRef.current.style.width) {
+            setWidth(resizeRef.current.style.width);
+            setHeight(resizeRef.current.style.height);
+            resizeRef.current.style.opacity = 0;
+        }
         window.removeEventListener('mousemove', onResize, false);
         window.removeEventListener('mouseup', stopResize, false);
+        window.removeEventListener('touchmove', onResize, false);
+        window.removeEventListener('touchend', stopResize, false);
     };
 
     const startDrag = (event: any) => {
-        if (isMaximized) return; // Prevent dragging when maximized
-        const { clientX, clientY } = event;
+        if (isMaximized) return;
+        const { clientX, clientY } = getClientCoords(event);
         setIsDragging(true);
-        event.preventDefault();
         dragProps.current = {
             dragStartX: clientX,
             dragStartY: clientY,
         };
         window.addEventListener('mousemove', onDrag, false);
         window.addEventListener('mouseup', stopDrag, false);
+        window.addEventListener('touchmove', onDrag, false);
+        window.addEventListener('touchend', stopDrag, false);
     };
 
-            const onDrag = ({ clientX, clientY }: any) => {
+    const onDrag = (e: any) => {
         if (isMaximized || !dragProps.current) return;
+        const { clientX, clientY } = getClientCoords(e);
         const { dragStartX, dragStartY } = dragProps.current;
         const deltaX = clientX - dragStartX;
         const deltaY = clientY - dragStartY;
         let newX = left + deltaX;
         let newY = top + deltaY;
 
-        // Clamp to outermost desktop screen perimeter (1216x928)
-        newX = Math.max(0, Math.min(1216 - width, newX));
-        newY = Math.max(0, Math.min(928 - height, newY));
+        const maxW = window.innerWidth;
+        const maxH = window.innerHeight - 32;
+        newX = Math.max(0, Math.min(maxW - (typeof width === 'number' ? width : 200), newX));
+        newY = Math.max(0, Math.min(maxH - (typeof height === 'number' ? height : 150), newY));
 
         if (dragRef.current) {
             dragRef.current.style.transform = `translate3d(${newX}px, ${newY}px, 0px)`;
@@ -135,14 +174,17 @@ const Window: React.FC<WindowProps> = (props) => {
         }
     };
 
-    const stopDrag = ({ clientX, clientY }: any) => {
+    const stopDrag = (e: any) => {
         setIsDragging(false);
-        if (dragRef.current) dragRef.current.style.opacity = 0;
+        if (dragRef.current) dragRef.current.style.opacity = '0';
+        const { clientX, clientY } = getClientCoords(e);
         const { x, y } = getXYFromDragProps(clientX, clientY);
         setTop(y);
         setLeft(x);
         window.removeEventListener('mousemove', onDrag, false);
         window.removeEventListener('mouseup', stopDrag, false);
+        window.removeEventListener('touchmove', onDrag, false);
+        window.removeEventListener('touchend', stopDrag, false);
     };
 
     const getXYFromDragProps = (
@@ -238,6 +280,7 @@ const Window: React.FC<WindowProps> = (props) => {
                         <div
                             style={styles.dragHitbox}
                             onMouseDown={startDrag}
+                            onTouchStart={startDrag}
                         ></div>
                         <div
                             className={props.rainbow ? 'rainbow-wrapper' : ''}

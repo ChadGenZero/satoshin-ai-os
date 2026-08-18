@@ -68,7 +68,8 @@ const DesktopShortcut: React.FC<DesktopShortcutProps> = ({
     );
 
     const handleClickShortcut = useCallback(() => {
-        if (doubleClickTimerActive) {
+        const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth <= 768);
+        if (isTouchDevice || doubleClickTimerActive) {
             onOpen && onOpen();
             setIsSelected(false);
             setDoubleClickTimerActive(false);
@@ -83,7 +84,7 @@ const DesktopShortcut: React.FC<DesktopShortcutProps> = ({
         }, 350);
     }, [doubleClickTimerActive, setIsSelected, onOpen]);
 
-    const handleMouseDownShortcut = (e: React.MouseEvent) => {
+    const handleMouseDownShortcut = (e: any) => {
         soundEffects.playMouseDown();
         handleClickShortcut();
     };
@@ -94,12 +95,14 @@ const DesktopShortcut: React.FC<DesktopShortcutProps> = ({
 
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('touchstart', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('touchstart', handleClickOutside);
         };
     }, [isSelected, handleClickOutside]);
 
-        const isEnlarged = icon === 'windowExplorerIcon' || icon === 'windowGameIcon';
+    const isEnlarged = icon === 'windowExplorerIcon' || icon === 'windowGameIcon';
     const iconSize = isEnlarged ? 35 : 32;
 
     return (
@@ -107,6 +110,7 @@ const DesktopShortcut: React.FC<DesktopShortcutProps> = ({
             id={`${shortcutId}`}
             style={Object.assign({}, styles.appShortcut, scaledStyle)}
             onMouseDown={handleMouseDownShortcut}
+            onTouchStart={handleMouseDownShortcut}
             onMouseUp={handleMouseUpShortcut}
             ref={containerRef}
         >

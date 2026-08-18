@@ -967,3 +967,30 @@ div {
 .info-wrapper div {
     font-family: 'ocr-a-std', 'Courier Prime', Consolas, Monaco, 'Courier New', monospace !important;
 }
+
+@media only screen and (max-width: 768px) {
+    .site-page-content {
+        margin-left: 0 !important;
+        padding: 16px !important;
+        padding-top: 16px !important;
+    }
+    .site-page {
+        flex-direction: column !important;
+    }
+    h1 {
+        font-size: 32px !important;
+    }
+    h2 {
+        font-size: 20px !important;
+    }
+    h3 {
+        font-size: 16px !important;
+    }
+    p {
+        font-size: 14px !important;
+    }
+    * {
+        touch-action: manipulation;
+    }
+}
+
