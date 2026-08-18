@@ -8,9 +8,8 @@
   <meta name="description" content="Satoshin.ai OS - Sovereign Intelligence" />
   <base target="_parent">
   <link rel="stylesheet" href="https://use.typekit.net/llo2eru.css" />
-  <link rel="icon" type="image/png" href="%PUBLIC_URL%/favicon.png" />
-  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.png" type="image/png" />
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="shortcut icon" href="/favicon.png" type="image/png" />
   <title>Satoshin.ai - OS</title>
   <script>
     window.onload = () => {
@@ -31,10 +30,12 @@
       });
     };
   </script>
-  <script src="%PUBLIC_URL%/js-dos/js-dos.js"></script>
-  <link rel="stylesheet" href="%PUBLIC_URL%/js-dos/js-dos.css">
+  <script src="/js-dos/js-dos.js"></script>
+  <link rel="stylesheet" href="/js-dos/js-dos.css">
   <script>
-    emulators.pathPrefix = "%PUBLIC_URL%/js-dos/";
+    if (window.emulators) {
+      emulators.pathPrefix = "/js-dos/";
+    }
   </script>
 </head>
 
@@ -47,6 +48,7 @@
     <span style="font-family: 'Terminal', Arial, sans-serif;">abcdefghijklmnopqrstuvwxzy</span>
   </div>
   <div id="root"></div>
+  <script type="module" src="/src/index.tsx"></script>
 </body>
 
 </html>

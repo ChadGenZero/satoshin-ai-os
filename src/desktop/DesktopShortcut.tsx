@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { IconName } from '../../assets/icons';
-import colors from '../../constants/colors';
-import { Icon } from '../general';
-import getIconByName from '../../assets/icons';
+import type { IconName } from '../assets/icons';
+import colors from '../theme/colors';
+import Icon from '../components/Icon';
+import { icons } from '../assets/icons';
+import soundEffects from '../utils/SoundEffects';
 
 export interface DesktopShortcutProps {
     icon: IconName;
@@ -20,11 +21,11 @@ const DesktopShortcut: React.FC<DesktopShortcutProps> = ({
     const [isSelected, setIsSelected] = useState(false);
     const [shortcutId, setShortcutId] = useState('');
     const [lastSelected, setLastSelected] = useState(false);
-    const containerRef = useRef<any>();
+    const containerRef = useRef<any>(null);
 
     const [scaledStyle, setScaledStyle] = useState({});
 
-    const requiredIcon = getIconByName(icon) as unknown as string;
+    const requiredIcon = icons[icon];
     const [doubleClickTimerActive, setDoubleClickTimerActive] = useState(false);
 
     const getShortcutId = useCallback(() => {
@@ -79,8 +80,17 @@ const DesktopShortcut: React.FC<DesktopShortcutProps> = ({
         // set double click timer
         setTimeout(() => {
             setDoubleClickTimerActive(false);
-        }, 300);
+        }, 350);
     }, [doubleClickTimerActive, setIsSelected, onOpen]);
+
+    const handleMouseDownShortcut = (e: React.MouseEvent) => {
+        soundEffects.playMouseDown();
+        handleClickShortcut();
+    };
+
+    const handleMouseUpShortcut = () => {
+        soundEffects.playMouseUp();
+    };
 
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
@@ -89,11 +99,15 @@ const DesktopShortcut: React.FC<DesktopShortcutProps> = ({
         };
     }, [isSelected, handleClickOutside]);
 
+        const isEnlarged = icon === 'windowExplorerIcon' || icon === 'windowGameIcon';
+    const iconSize = isEnlarged ? 35 : 32;
+
     return (
         <div
             id={`${shortcutId}`}
             style={Object.assign({}, styles.appShortcut, scaledStyle)}
-            onMouseDown={handleClickShortcut}
+            onMouseDown={handleMouseDownShortcut}
+            onMouseUp={handleMouseUpShortcut}
             ref={containerRef}
         >
             <div id={`${shortcutId}`} style={styles.iconContainer}>
@@ -103,13 +117,25 @@ const DesktopShortcut: React.FC<DesktopShortcutProps> = ({
                     style={Object.assign(
                         {},
                         styles.iconOverlay,
+                        { width: iconSize, height: iconSize },
                         isSelected && styles.checkerboard,
                         isSelected && {
-                            WebkitMask: `url(${requiredIcon})`,
+                            WebkitMaskImage: `url(${requiredIcon})`,
+                            WebkitMaskSize: '100% 100%',
+                            WebkitMaskRepeat: 'no-repeat',
+                            WebkitMaskPosition: 'center',
+                            maskImage: `url(${requiredIcon})`,
+                            maskSize: '100% 100%',
+                            maskRepeat: 'no-repeat',
+                            maskPosition: 'center',
                         }
                     )}
                 />
-                <Icon icon={icon} style={styles.icon} />
+                <Icon
+                    icon={icon}
+                    size={iconSize}
+                    style={styles.icon}
+                />
             </div>
             <div
                 className={

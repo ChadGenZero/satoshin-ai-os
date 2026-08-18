@@ -1,3 +1,310 @@
+@font-face {
+    font-family: 'Terminal';
+    src: url('./assets/fonts/Terminal.ttf') format('truetype');
+}
+
+#loading-screen *,
+.info-wrapper p, .info-wrapper span, .info-wrapper div {
+    font-family: ocr-a-std, monospace !important;
+}
+
+
+/* ========================================================================= */
+/* OUTER WORKSPACE BASE STYLES                                               */
+/* ========================================================================= */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    overflow: hidden;
+}
+
+.webgl {
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+}
+
+.jitter {
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: jittery;
+    z-index: -10;
+}
+
+.interface-wrapper {
+    width: 100%;
+    top: 64px;
+    left: 64px;
+}
+
+.icon-control-container {
+    height: 26.5px;
+    width: 26.5px;
+}
+
+@media only screen and (max-width: 768px) {
+    .interface-wrapper {
+        width: 100%;
+        top: 24px;
+        left: 24px;
+    }
+
+    .icon-control-container {
+        height: 19.5px;
+        width: 19.5px;
+    }
+}
+
+@keyframes jittery {
+    10% {
+        transform: translate(-0.1px, -0.15px) scale(1, 1);
+    }
+
+    20% {
+        transform: translate(0.15px, 0.1px) scale(1, 1);
+    }
+
+    30% {
+        transform: translate(-0.2px, -0.25px) scale(1, 1);
+    }
+
+    40% {
+        transform: translate(0.05px, 0.1px) scale(1, 1);
+    }
+
+    50% {
+        transform: translate(-0.025px, -0.05px) scale(1, 1);
+    }
+
+    60% {
+        transform: translate(0px, 0.075px) scale(1, 1);
+    }
+
+    70% {
+        transform: translate(-0.075px, -0.1px) scale(1, 1);
+    }
+
+    80% {
+        transform: translate(0.075px, 0.125px) scale(1, 1);
+    }
+
+    90% {
+        transform: translate(-0.125px, -0.075px) scale(1, 1);
+    }
+
+    100% {
+        transform: translate(0.075px, 0.025px) scale(1, 1);
+    }
+}
+
+
+/* ========================================================================= */
+/* OUTER WORKSPACE UI OVERLAY STYLES                                         */
+/* ========================================================================= */
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+    /* font-family: ocr-a-std, monospace; */
+    font-family: monospace;
+    font-weight: 400;
+    font-style: normal;
+    color: white;
+    /* mobile friendly font size */
+    font-size: 16px;
+}
+
+/* if on mobile */
+@media only screen and (max-width: 768px) {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    p {
+        font-size: 10px;
+    }
+}
+
+br {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    height: 16px;
+}
+
+.loading::after {
+    display: inline-block;
+    animation: dotty steps(1, end) 1s infinite;
+    content: '';
+}
+
+@keyframes dotty {
+    0% {
+        content: '   ';
+    }
+    25% {
+        content: '. ';
+    }
+    50% {
+        content: '.. ';
+    }
+    75% {
+        content: '...';
+    }
+    100% {
+        content: '   ';
+    }
+}
+.blinking-cursor {
+    display: inline-block !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    color: #F7931A !important;
+    font-family: ocr-a-std, Consolas, Monaco, 'Courier New', monospace !important;
+    font-weight: bold !important;
+    font-size: 1.1em !important;
+    margin-left: 4px !important;
+    animation: continuous-cursor-blink 0.65s step-end infinite !important;
+    -webkit-animation: continuous-cursor-blink 0.65s step-end infinite !important;
+}
+
+@keyframes blink {
+    from,
+    to {
+        background-color: transparent;
+    }
+    50% {
+        background-color: white;
+    }
+}
+
+@-moz-keyframes blink {
+    from,
+    to {
+        background-color: transparent;
+    }
+    50% {
+        background-color: white;
+    }
+}
+
+@-webkit-keyframes blink {
+    from,
+    to {
+        background-color: transparent;
+    }
+    50% {
+        background-color: white;
+    }
+}
+
+@-ms-keyframes blink {
+    from,
+    to {
+        background-color: transparent;
+    }
+    50% {
+        background-color: white;
+    }
+}
+
+@-o-keyframes blink {
+    from,
+    to {
+        background-color: transparent;
+    }
+    50% {
+        background-color: white;
+    }
+}
+
+.bios-start-button {
+    background-color: #000 !important;
+    border: 3px solid #F7931A !important;
+    border-width: 3px !important;
+    cursor: pointer !important;
+}
+
+.bios-start-button p {
+    box-sizing: border-box !important;
+    padding: 8px 24px !important;
+    color: #F7931A !important;
+    font-weight: bold !important;
+}
+
+.bios-start-button:hover p {
+    background-color: #F7931A !important;
+    cursor: pointer !important;
+    color: #000000 !important;
+}
+
+.loading-screen-header {
+    padding: 48px;
+}
+
+.loading-screen-body {
+    padding-left: 48px;
+    padding-right: 48px;
+}
+
+.loading-screen-footer {
+    padding: 48px;
+    padding-bottom: 64px;
+}
+
+.info-wrapper {
+    top: 64px;
+    left: 64px;
+}
+
+/* if on mobile make all loading screen elements have a padding of 16 */
+@media only screen and (max-width: 768px) {
+    .loading-screen-header {
+        padding: 16px;
+    }
+
+    .info-wrapper {
+        top: 16px;
+        left: 16px;
+    }
+
+    .blinking-cursor {
+    display: inline-block !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    color: #F7931A !important;
+    font-family: ocr-a-std, Consolas, Monaco, 'Courier New', monospace !important;
+    font-weight: bold !important;
+    font-size: 1.1em !important;
+    margin-left: 4px !important;
+    animation: continuous-cursor-blink 0.65s step-end infinite !important;
+    -webkit-animation: continuous-cursor-blink 0.65s step-end infinite !important;
+}
+    
+    .loading-screen-body {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .loading-screen-footer {
+        padding: 16px;
+        padding-bottom: 32px;
+    }
+}
+
+
+/* ========================================================================= */
+/* INNER DESKTOP BASE STYLES                                                 */
+/* ========================================================================= */
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
@@ -8,7 +315,7 @@ body {
 }
 
 html, body {
-    background-color: #fff;
+    background-color: #000;
 }
 
 code {
@@ -399,4 +706,264 @@ input:active {
     background-color: #0000aa;
     cursor: pointer;
     color: white;
+}
+
+/* ========================================================================= */
+/* INNER DESKTOP APP STYLES                                                  */
+/* ========================================================================= */
+.App {
+    height: 100%;
+    /* width: 1280px; */
+    width: 100%;
+    /* min-height: 100%; */
+    image-rendering: pixelated;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+div {
+    display: flex;
+}
+
+#root {
+    height: 100%;
+}
+
+.white {
+    color: #fff;
+}
+
+
+.blinking-cursor {
+    display: inline-block !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    color: #F7931A !important;
+    font-family: ocr-a-std, Consolas, Monaco, 'Courier New', monospace !important;
+    font-weight: bold !important;
+    font-size: 1.1em !important;
+    margin-left: 4px !important;
+    animation: continuous-cursor-blink 0.65s step-end infinite !important;
+    -webkit-animation: continuous-cursor-blink 0.65s step-end infinite !important;
+}
+
+@keyframes blink {
+    from,
+    to {
+        background-color: transparent;
+    }
+    50% {
+        background-color: white;
+    }
+}
+
+@-moz-keyframes blink {
+    from,
+    to {
+        background-color: transparent;
+    }
+    50% {
+        background-color: white;
+    }
+}
+
+@-webkit-keyframes blink {
+    from,
+    to {
+        background-color: transparent;
+    }
+    50% {
+        background-color: white;
+    }
+}
+
+@-ms-keyframes blink {
+    from,
+    to {
+        background-color: transparent;
+    }
+    50% {
+        background-color: white;
+    }
+}
+
+@-o-keyframes blink {
+    from,
+    to {
+        background-color: transparent;
+    }
+    50% {
+        background-color: white;
+    }
+}
+
+
+
+
+/* ========================================================================= */
+/* BOOT / BIOS SCREEN NEON BITCOIN ORANGE #F7931A & ALIGNED PERCENTAGES      */
+/* ========================================================================= */
+
+.blinking-cursor {
+    display: inline-block !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    color: #F7931A !important;
+    font-family: ocr-a-std, Consolas, Monaco, 'Courier New', monospace !important;
+    font-weight: bold !important;
+    font-size: 1.1em !important;
+    margin-left: 4px !important;
+    animation: continuous-cursor-blink 0.65s step-end infinite !important;
+    -webkit-animation: continuous-cursor-blink 0.65s step-end infinite !important;
+}
+
+@keyframes blink {
+    from, to { background-color: transparent; }
+    50% { background-color: #F7931A; }
+}
+
+.bios-start-button {
+    background-color: #000 !important;
+    border: 3px solid #F7931A !important;
+    border-width: 3px !important;
+    cursor: pointer !important;
+}
+
+.bios-start-button p {
+    box-sizing: border-box !important;
+    padding: 8px 24px !important;
+    color: #F7931A !important;
+    font-weight: bold !important;
+}
+
+.bios-start-button:hover p {
+    background-color: #F7931A !important;
+    cursor: pointer !important;
+    color: #000000 !important;
+}
+
+.boot-resource-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 440px;
+    max-width: 100%;
+    font-family: ocr-a-std, Consolas, Monaco, 'Courier New', monospace;
+    color: #F7931A;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.boot-resource-name {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.boot-resource-dots {
+    margin-left: 8px;
+    margin-right: 12px;
+    color: #F7931A;
+}
+
+.boot-resource-percent {
+    width: 45px;
+    text-align: right;
+    font-weight: bold;
+    color: #F7931A;
+}
+
+#loading-screen p, #loading-screen span, #loading-screen div {
+    font-family: ocr-a-std, Consolas, Monaco, 'Courier New', monospace !important;
+}
+
+
+/* ========================================================================= */
+/* CONTINUOUS BLINKING UNDERSCORE & TOP-LEFT TERMINAL FONT BADGES            */
+/* ========================================================================= */
+
+.blinking-cursor {
+    display: inline-block !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    color: #F7931A !important;
+    font-family: ocr-a-std, Consolas, Monaco, 'Courier New', monospace !important;
+    font-weight: bold !important;
+    font-size: 1.1em !important;
+    margin-left: 4px !important;
+    animation: continuous-cursor-blink 0.65s step-end infinite !important;
+    -webkit-animation: continuous-cursor-blink 0.65s step-end infinite !important;
+}
+
+@keyframes continuous-cursor-blink {
+    0%, 100% {
+        opacity: 1;
+        visibility: visible;
+    }
+    50% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@-webkit-keyframes continuous-cursor-blink {
+    0%, 100% {
+        opacity: 1;
+        visibility: visible;
+    }
+    50% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+.info-wrapper p, .info-wrapper span, .info-wrapper div {
+    font-family: ocr-a-std, monospace !important;
+}
+
+
+.blinking-cursor-white {
+    display: inline-block !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    color: #ffffff !important;
+    font-family: ocr-a-std, Consolas, Monaco, 'Courier New', monospace !important;
+    font-weight: bold !important;
+    font-size: 1.1em !important;
+    margin-left: 4px !important;
+    animation: continuous-cursor-blink 0.65s step-end infinite !important;
+    -webkit-animation: continuous-cursor-blink 0.65s step-end infinite !important;
+}
+
+.bios-start-button {
+    background-color: #000 !important;
+    border: 3px solid #F7931A !important;
+    border-width: 3px !important;
+    cursor: pointer !important;
+}
+
+.bios-start-button p {
+    box-sizing: border-box !important;
+    padding: 8px 24px !important;
+    color: #F7931A !important;
+    font-weight: bold !important;
+}
+
+/* Top Left Badges Font Rule */
+.interface-wrapper,
+.interface-wrapper *,
+.info-wrapper,
+.info-wrapper *,
+.info-wrapper p,
+.info-wrapper span,
+.info-wrapper div {
+    font-family: 'ocr-a-std', 'Courier Prime', Consolas, Monaco, 'Courier New', monospace !important;
 }

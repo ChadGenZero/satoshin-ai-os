@@ -1,10 +1,12 @@
+import React from 'react';
+import DesktopApp from './desktop/DesktopApp';
 import './App.css';
-import Desktop from './components/os/Desktop';
+import './index.css';
 
 function App() {
     return (
         <div className="App">
-            <Desktop />
+            <DesktopApp />
         </div>
     );
 }
