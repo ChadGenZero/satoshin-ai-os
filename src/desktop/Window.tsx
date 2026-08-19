@@ -56,7 +56,7 @@ const Window: React.FC<WindowProps> = (props) => {
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
 
     const getInitialWidth = () => (isMobile ? '100%' : props.width);
-    const getInitialHeight = () => (isMobile ? 'calc(100% - 32px)' : props.height);
+    const getInitialHeight = () => (isMobile ? 'calc(100% - 36px)' : props.height);
     const getInitialLeft = () => (isMobile ? 0 : props.left);
     const getInitialTop = () => (isMobile ? 0 : props.top);
 
@@ -88,7 +88,7 @@ const Window: React.FC<WindowProps> = (props) => {
         const handleResizeWindow = () => {
             if (window.innerWidth <= 768) {
                 setWidth('100%');
-                setHeight('calc(100% - 32px)');
+                setHeight('calc(100% - 36px)');
                 setLeft(0);
                 setTop(0);
                 setIsMaximized(true);
@@ -118,7 +118,7 @@ const Window: React.FC<WindowProps> = (props) => {
         if (isMaximized) return;
         const { clientX, clientY } = getClientCoords(e);
         const maxW = window.innerWidth;
-        const maxH = window.innerHeight - 32;
+        const maxH = window.innerHeight - 36;
         const curWidth = Math.min(maxW - left - 4, Math.max(200, clientX - left));
         const curHeight = Math.min(maxH - top - 4, Math.max(150, clientY - top));
         if (resizeRef.current) {
@@ -165,7 +165,7 @@ const Window: React.FC<WindowProps> = (props) => {
         let newY = top + deltaY;
 
         const maxW = window.innerWidth;
-        const maxH = window.innerHeight - 32;
+        const maxH = window.innerHeight - 36;
         newX = Math.max(0, Math.min(maxW - (typeof width === 'number' ? width : 200), newX));
         newY = Math.max(0, Math.min(maxH - (typeof height === 'number' ? height : 150), newY));
 
@@ -214,15 +214,15 @@ const Window: React.FC<WindowProps> = (props) => {
     }, [props.onHeightChange, contentHeight]); // eslint-disable-line
 
     useEffect(() => {
-        setContentWidth(contentRef.current.getBoundingClientRect().width);
+        if (contentRef.current) setContentWidth(contentRef.current.getBoundingClientRect().width);
     }, [width]);
 
     useEffect(() => {
-        setContentHeight(contentRef.current.getBoundingClientRect().height);
+        if (contentRef.current) setContentHeight(contentRef.current.getBoundingClientRect().height);
     }, [height]);
 
     const maximize = () => {
-        if (isMaximized) {
+        if (isMaximized && !isMobile) {
             setWidth(preMaxSize.width);
             setHeight(preMaxSize.height);
             setTop(preMaxSize.top);
@@ -230,13 +230,13 @@ const Window: React.FC<WindowProps> = (props) => {
             setIsMaximized(false);
         } else {
             setPreMaxSize({
-                width,
-                height,
+                width: typeof width === 'string' ? props.width : width,
+                height: typeof height === 'string' ? props.height : height,
                 top,
                 left,
             });
             setWidth('100%' as any);
-            setHeight('calc(100% - 32px)' as any);
+            setHeight('calc(100% - 36px)' as any);
             setTop(0);
             setLeft(0);
             setIsMaximized(true);

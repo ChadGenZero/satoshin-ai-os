@@ -1,32 +1,29 @@
-.App {
-    height: 100vh;
-    /* width: 1280px; */
-    width: 100%;
-    /* min-height: 100%; */
-    image-rendering: pixelated;
-    overflow-y: hidden;
-    overflow-x: hidden;
-}
-
 html,
-body {
+body,
+#root,
+.App {
     height: 100%;
+    height: 100dvh;
+    height: 100svh;
+    width: 100%;
     margin: 0;
+    padding: 0;
     overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    image-rendering: pixelated;
 }
 
 div {
     display: flex;
 }
 
-#root {
-    height: 100%;
-}
-
 .white {
     color: #fff;
 }
-
 
 .blinking-cursor {
     background-color: #fff;
@@ -40,46 +37,6 @@ div {
 }
 
 @keyframes blink {
-    from,
-    to {
-        background-color: transparent;
-    }
-    50% {
-        background-color: white;
-    }
-}
-
-@-moz-keyframes blink {
-    from,
-    to {
-        background-color: transparent;
-    }
-    50% {
-        background-color: white;
-    }
-}
-
-@-webkit-keyframes blink {
-    from,
-    to {
-        background-color: transparent;
-    }
-    50% {
-        background-color: white;
-    }
-}
-
-@-ms-keyframes blink {
-    from,
-    to {
-        background-color: transparent;
-    }
-    50% {
-        background-color: white;
-    }
-}
-
-@-o-keyframes blink {
     from,
     to {
         background-color: transparent;

@@ -205,14 +205,17 @@ const Toolbar: React.FC<ToolbarProps> = ({
 const styles: StyleSheetCSS = {
     toolbarOuter: {
         boxSizing: 'border-box',
-        position: 'absolute',
+        position: 'fixed',
         bottom: 0,
         left: 0,
+        right: 0,
         width: '100%',
-        height: 32,
+        height: 36,
         background: Colors.lightGray,
-        borderTop: `1px solid ${Colors.lightGray}`,
-        zIndex: 100000,
+        borderTop: `2px solid ${Colors.white}`,
+        boxShadow: '0 -2px 8px rgba(0,0,0,0.3)',
+        zIndex: 999999,
+        paddingBottom: 'env(safe-area-inset-bottom, 0px)',
     },
     verticalStartContainer: {
         width: 32,
@@ -249,8 +252,8 @@ const styles: StyleSheetCSS = {
         height: '100%',
     },
     startWindow: {
-        position: 'absolute',
-        bottom: 30,
+        position: 'fixed',
+        bottom: 36,
         display: 'flex',
         flexDirection: 'row',
         width: 256,
@@ -261,7 +264,8 @@ const styles: StyleSheetCSS = {
         borderBottomColor: Colors.black,
         borderRightColor: Colors.black,
         background: Colors.lightGray,
-        zIndex: 100001,
+        zIndex: 1000000,
+        boxShadow: '2px 2px 10px rgba(0,0,0,0.4)',
     },
     activeTabOuter: {
         border: `1px solid ${Colors.black}`,
