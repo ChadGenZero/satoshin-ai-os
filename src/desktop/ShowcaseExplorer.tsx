@@ -25,7 +25,7 @@ const ShowcaseExplorer: React.FC<ShowcaseExplorerProps> = (props) => {
             bottomLeftText={'satoshin.ai © 2009'}
         >
             <MemoryRouter>
-                <div style={{ flex: 1, display: 'flex', width: '100%', height: '100%' }}>
+                <div className="showcase-explorer-root" style={{ flex: 1, display: 'flex', width: '100%', height: '100%' }}>
                     <VerticalNavbar />
                     <Routes>
                         <Route path="/" element={<Home />} />

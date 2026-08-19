@@ -14,9 +14,9 @@ const VerticalNavbar: React.FC = () => {
     const location = useLocation();
 
     return (
-        <div style={styles.navbar}>
-            <div style={styles.brand}>SATOSHI</div>
-            <div style={styles.menu}>
+        <div className="vertical-navbar-root" style={styles.navbar}>
+            <div className="vertical-navbar-brand" style={styles.brand}>SATOSHI</div>
+            <div className="vertical-navbar-menu" style={styles.menu}>
                 {NAV_ITEMS.map((item) => {
                     const isActive = location.pathname === item.path;
                     return (
@@ -45,6 +45,8 @@ const styles: Record<string, React.CSSProperties> = {
         borderRight: '1px solid #2d3748',
         flexDirection: 'column',
         padding: 16,
+        boxSizing: 'border-box',
+        flexShrink: 0,
     },
     brand: {
         color: '#f7931a',
@@ -64,6 +66,7 @@ const styles: Record<string, React.CSSProperties> = {
         borderRadius: 4,
         fontSize: 13,
         transition: 'all 0.2s',
+        whiteSpace: 'nowrap',
     },
     activeLink: {
         color: '#ffffff',

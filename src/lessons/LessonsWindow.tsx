@@ -80,9 +80,9 @@ export const LessonsWindow: React.FC<LessonsWindowProps> = (props) => {
                 </div>
 
                 {/* Main Body Layout */}
-                <div style={styles.bodyLayout}>
+                <div className="lessons-body-layout" style={styles.bodyLayout}>
                     {/* Left Lessons Sidebar */}
-                    <div style={styles.sidebar}>
+                    <div className="lessons-sidebar" style={styles.sidebar}>
                         <div style={styles.sidebarHeader}>
                             <span style={styles.sidebarTitle}>{currentPhase.title}</span>
                             <span style={styles.sidebarBadge}>5 Lessons</span>

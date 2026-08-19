@@ -55,21 +55,21 @@ const Window: React.FC<WindowProps> = (props) => {
 
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
 
-    const getInitialWidth = () => (isMobile ? Math.min(props.width, window.innerWidth - 8) : props.width);
-    const getInitialHeight = () => (isMobile ? Math.min(props.height, window.innerHeight - 36) : props.height);
-    const getInitialLeft = () => (isMobile ? 4 : props.left);
-    const getInitialTop = () => (isMobile ? 4 : props.top);
+    const getInitialWidth = () => (isMobile ? '100%' : props.width);
+    const getInitialHeight = () => (isMobile ? 'calc(100% - 32px)' : props.height);
+    const getInitialLeft = () => (isMobile ? 0 : props.left);
+    const getInitialTop = () => (isMobile ? 0 : props.top);
 
-    const [top, setTop] = useState<number>(getInitialTop());
-    const [left, setLeft] = useState<number>(getInitialLeft());
+    const [top, setTop] = useState<any>(getInitialTop());
+    const [left, setLeft] = useState<any>(getInitialLeft());
 
     const lastClickInside = useRef(false);
 
     const [width, setWidth] = useState<any>(getInitialWidth());
     const [height, setHeight] = useState<any>(getInitialHeight());
 
-    const [contentWidth, setContentWidth] = useState(getInitialWidth());
-    const [contentHeight, setContentHeight] = useState(getInitialHeight());
+    const [contentWidth, setContentWidth] = useState<any>(getInitialWidth());
+    const [contentHeight, setContentHeight] = useState<any>(getInitialHeight());
 
     const [windowActive, setWindowActive] = useState(true);
 
@@ -87,10 +87,11 @@ const Window: React.FC<WindowProps> = (props) => {
     useEffect(() => {
         const handleResizeWindow = () => {
             if (window.innerWidth <= 768) {
-                setWidth((prev: any) => (typeof prev === 'number' ? Math.min(prev, window.innerWidth - 8) : prev));
-                setHeight((prev: any) => (typeof prev === 'number' ? Math.min(prev, window.innerHeight - 36) : prev));
-                setLeft(4);
-                setTop(4);
+                setWidth('100%');
+                setHeight('calc(100% - 32px)');
+                setLeft(0);
+                setTop(0);
+                setIsMaximized(true);
             }
         };
         window.addEventListener('resize', handleResizeWindow);
