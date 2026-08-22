@@ -10,6 +10,7 @@ interface ThemeOption {
 
 const THEMES: ThemeOption[] = [
     { value: 'teal', label: 'Retro Turquoise (Teal)' },
+    { value: 'bliss', label: 'Bitcoin Bliss (Satoshi Hill)' },
     { value: 'satoshi', label: 'Satoshi Theme (Dark + Emblem)' },
     { value: 'matrix', label: 'Matrix Code (Green)' },
     { value: 'amber', label: 'Golden Satoshi (Amber)' },

@@ -1,4 +1,5 @@
 import satoshiThemeLogo from '../assets/satoshiThemeLogo.png';
+import bitcoinBlissWallpaper from '../assets/bitcoinBlissWallpaper.jpg';
 import BitcoinCoreWindow from './BitcoinCoreWindow';
 import ShowcaseExplorer from './ShowcaseExplorer';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -209,6 +210,27 @@ const DesktopApp: React.FC<DesktopProps> = (props) => {
                          desktopTheme === 'amber' ? '#180f04' :
                          desktopTheme === 'charcoal' ? '#202228' : Colors.turquoise
     }}>
+        {desktopTheme === 'bliss' && (
+            <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none',
+                zIndex: 0,
+            }}>
+                <img
+                    src={bitcoinBlissWallpaper}
+                    alt="Bitcoin Bliss Wallpaper"
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                    }}
+                />
+            </div>
+        )}
         {desktopTheme === 'satoshi' && (
             <div style={{
                 position: 'absolute',
