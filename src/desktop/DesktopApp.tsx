@@ -67,12 +67,21 @@ const DesktopApp: React.FC<DesktopProps> = (props) => {
     const [windows, setWindows] = useState<DesktopWindows>({});
     const [desktopTheme, setDesktopTheme] = useState<string>('teal');
 
+    const [scanlines, setScanlines] = useState<boolean>(true);
+
     useEffect(() => {
         const handleThemeChange = (e: CustomEvent) => {
             if (e.detail) setDesktopTheme(e.detail);
         };
+        const handleScanlinesChange = (e: CustomEvent) => {
+            setScanlines(e.detail !== undefined ? e.detail : true);
+        };
         window.addEventListener('desktopThemeChanged', handleThemeChange as EventListener);
-        return () => window.removeEventListener('desktopThemeChanged', handleThemeChange as EventListener);
+        window.addEventListener('crtScanlinesChanged', handleScanlinesChange as EventListener);
+        return () => {
+            window.removeEventListener('desktopThemeChanged', handleThemeChange as EventListener);
+            window.removeEventListener('crtScanlinesChanged', handleScanlinesChange as EventListener);
+        };
     }, []);
 
     const [shortcuts, setShortcuts] = useState<DesktopShortcutProps[]>([]);
@@ -303,6 +312,37 @@ const DesktopApp: React.FC<DesktopProps> = (props) => {
                 toggleMinimize={toggleMinimize}
                 shutdown={startShutdown}
             />
+            {scanlines && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100vw',
+                        height: '100vh',
+                        pointerEvents: 'none',
+                        zIndex: 99999999,
+                        background: `
+                            linear-gradient(
+                                rgba(18, 16, 16, 0) 50%,
+                                rgba(0, 0, 0, 0.15) 50%
+                            ),
+                            linear-gradient(
+                                90deg,
+                                rgba(255, 0, 0, 0.02),
+                                rgba(0, 255, 0, 0.01),
+                                rgba(0, 0, 255, 0.02)
+                            ),
+                            radial-gradient(
+                                circle at center,
+                                rgba(0, 0, 0, 0) 65%,
+                                rgba(0, 0, 0, 0.2) 100%
+                            )
+                        `,
+                        backgroundSize: '100% 4px, 6px 100%, 100% 100%',
+                    }}
+                />
+            )}
         </div>
     ) : (
         <ShutdownSequence
