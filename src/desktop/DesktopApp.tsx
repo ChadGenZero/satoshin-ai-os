@@ -219,6 +219,7 @@ const DesktopApp: React.FC<DesktopProps> = (props) => {
                 height: '100%',
                 pointerEvents: 'none',
                 zIndex: 0,
+                backgroundColor: '#387be3',
             }}>
                 <img
                     src={bitcoinBlissWallpaper}
@@ -226,8 +227,8 @@ const DesktopApp: React.FC<DesktopProps> = (props) => {
                     style={{
                         width: '100%',
                         height: '100%',
-                        objectFit: 'cover',
-                        objectPosition: 'center bottom',
+                        objectFit: 'contain',
+                        objectPosition: 'center center',
                     }}
                 />
             </div>

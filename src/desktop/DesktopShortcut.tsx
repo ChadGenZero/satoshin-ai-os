@@ -68,8 +68,7 @@ const DesktopShortcut: React.FC<DesktopShortcutProps> = ({
     );
 
     const handleClickShortcut = useCallback(() => {
-        const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth <= 768);
-        if (isTouchDevice || doubleClickTimerActive) {
+        if (doubleClickTimerActive) {
             onOpen && onOpen();
             setIsSelected(false);
             setDoubleClickTimerActive(false);
