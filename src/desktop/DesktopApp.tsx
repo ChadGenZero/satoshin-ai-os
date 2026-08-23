@@ -314,6 +314,7 @@ const DesktopApp: React.FC<DesktopProps> = (props) => {
             />
             {scanlines && (
                 <div
+                    className="crt-scanline-animated"
                     style={{
                         position: 'fixed',
                         top: 0,
@@ -325,21 +326,15 @@ const DesktopApp: React.FC<DesktopProps> = (props) => {
                         background: `
                             linear-gradient(
                                 rgba(18, 16, 16, 0) 50%,
-                                rgba(0, 0, 0, 0.15) 50%
-                            ),
-                            linear-gradient(
-                                90deg,
-                                rgba(255, 0, 0, 0.02),
-                                rgba(0, 255, 0, 0.01),
-                                rgba(0, 0, 255, 0.02)
+                                rgba(0, 0, 0, 0.07) 50%
                             ),
                             radial-gradient(
                                 circle at center,
-                                rgba(0, 0, 0, 0) 65%,
-                                rgba(0, 0, 0, 0.2) 100%
+                                rgba(0, 0, 0, 0) 70%,
+                                rgba(0, 0, 0, 0.15) 100%
                             )
                         `,
-                        backgroundSize: '100% 4px, 6px 100%, 100% 100%',
+                        backgroundSize: '100% 4px, 100% 100%',
                     }}
                 />
             )}

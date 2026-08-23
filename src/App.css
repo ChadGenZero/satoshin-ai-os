@@ -45,3 +45,16 @@ div {
         background-color: white;
     }
 }
+
+@keyframes crtScanlinesScroll {
+    0% {
+        background-position: 0 0, 0 0;
+    }
+    100% {
+        background-position: 0 8px, 0 0;
+    }
+}
+
+.crt-scanline-animated {
+    animation: crtScanlinesScroll 0.4s linear infinite;
+}
