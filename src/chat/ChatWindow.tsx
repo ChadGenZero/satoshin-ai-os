@@ -10,6 +10,15 @@ export const ChatWindow: React.FC<ChatWindowProps> = (props) => {
     const [progress, setProgress] = useState(15);
 
     useEffect(() => {
+        // Dynamically inject Zapier Web Component script if missing
+        if (!document.querySelector('script[src*="zapier-interfaces"]')) {
+            const script = document.createElement('script');
+            script.src = 'https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js';
+            script.type = 'module';
+            script.async = true;
+            document.head.appendChild(script);
+        }
+
         // Animate loading progress bar
         const interval = setInterval(() => {
             setProgress((prev) => {
@@ -140,20 +149,17 @@ export const ChatWindow: React.FC<ChatWindowProps> = (props) => {
                 )}
 
                 <div style={styles.chatbotContainer}>
-                    {/* Embedded Zapier Chatbot Web Component */}
-                    {React.createElement('zapier-interfaces-chatbot-embed', {
-                        'is-popup': 'false',
-                        'chatbot-id': 'cm5bpzpe500624aa7thvjfnej',
-                        height: '100%',
-                        width: '100%',
-                        style: {
+                    <iframe
+                        src="https://interfaces.zapier.com/embed/chatbot/cm5bpzpe500624aa7thvjfnej"
+                        title="Talk to Satoshi"
+                        style={{
                             width: '100%',
                             height: '100%',
-                            display: 'block',
+                            border: 'none',
                             opacity: isLoaded ? 1 : 0,
                             transition: 'opacity 0.3s ease-in-out',
-                        },
-                    })}
+                        }}
+                    />
                 </div>
             </div>
         </Window>
