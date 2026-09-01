@@ -36,7 +36,7 @@ export const UncappedWindow: React.FC<UncappedWindowProps> = (props) => {
             closeWindow={props.onClose}
             minimizeWindow={props.onMinimize}
             onInteract={props.onInteract}
-            windowBarIcon="showcaseIcon"
+            windowBarIcon="uncappedIcon"
         >
             <div style={styles.container}>
                 {/* Retro Browser Address Bar Header */}

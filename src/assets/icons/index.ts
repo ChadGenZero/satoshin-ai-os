@@ -19,6 +19,7 @@ import windowsStartIcon from './windowsStartIcon.png';
 import scrabbleIcon from './scrabbleIcon.png';
 import close from './close.png';
 import bitcoinIcon from './bitcoinIcon.png';
+import uncappedIcon from './uncappedIcon.png';
 
 export const icons = {
     windowResize: windowResize,
@@ -36,6 +37,7 @@ export const icons = {
     henordleIcon: henordleIcon,
     close: close,
     bitcoinIcon: bitcoinIcon,
+    uncappedIcon: uncappedIcon,
     windowGameIcon: windowGameIcon,
     windowExplorerIcon: windowExplorerIcon,
     windowsStartIcon: windowsStartIcon,

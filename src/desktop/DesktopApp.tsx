@@ -32,12 +32,6 @@ const APPLICATIONS: {
         shortcutIcon: 'showcaseIcon',
         component: ShowcaseExplorer,
     },
-    uncapped: {
-        key: 'uncapped',
-        name: 'uncapped.lol',
-        shortcutIcon: 'trailIcon',
-        component: UncappedWindow,
-    },
     lessons: {
         key: 'lessons',
         name: 'Lessons',
@@ -61,6 +55,12 @@ const APPLICATIONS: {
         name: 'Bitcoin Core',
         shortcutIcon: 'bitcoinIcon',
         component: BitcoinCoreWindow,
+    },
+    uncapped: {
+        key: 'uncapped',
+        name: 'uncapped.lol',
+        shortcutIcon: 'uncappedIcon',
+        component: UncappedWindow,
     },
     settings: {
         key: 'settings',
