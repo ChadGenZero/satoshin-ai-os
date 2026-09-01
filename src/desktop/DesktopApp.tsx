@@ -8,6 +8,7 @@ import { LessonsWindow } from '../lessons/LessonsWindow';
 import { ChatWindow } from '../chat/ChatWindow';
 import { WhitepaperWindow } from './WhitepaperWindow';
 import { SettingsWindow } from './SettingsWindow';
+import { UncappedWindow } from './UncappedWindow';
 import type { IconName } from '../assets/icons';
 import DesktopShortcut, { type DesktopShortcutProps } from './DesktopShortcut';
 import Toolbar from './Toolbar';
@@ -30,6 +31,12 @@ const APPLICATIONS: {
         name: "Satoshi's Archive",
         shortcutIcon: 'showcaseIcon',
         component: ShowcaseExplorer,
+    },
+    uncapped: {
+        key: 'uncapped',
+        name: 'uncapped.lol',
+        shortcutIcon: 'trailIcon',
+        component: UncappedWindow,
     },
     lessons: {
         key: 'lessons',
